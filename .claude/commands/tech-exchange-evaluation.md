@@ -17,9 +17,10 @@ inputs:
   - counterpart_docs: "对方在交流中分享的技术文档（可选）"
   - internal_docs: "我方沉淀的相关行业技术文档，作为行业基准参考（可选）"
 output:
-  format: Markdown（用户可后续用 minimax-docx 技能转为 Word）
+  format: Word (.docx)，通过 minimax-docx 技能生成
   length: 3000-6000 字（视素材丰富度浮动）
   tone: 客观审慎、结论先行、论据紧随
+  output_path: "output/技术评估报告_{日期}_{技术主题}.docx"
 directory:
   base: "input/"                         # 素材根目录
   transcript: "input/transcript.md"      # 会议转写文本
@@ -76,6 +77,8 @@ input/
 5. 围绕本次技术主题做行业现状检索，结合我方沉淀文档，形成行业基准。
 6. 对照基准做先进性与可行性判断。
 7. 评估与公司业务升级转型的适配性。
+8. 按报告结构撰写完整 Markdown 内容。
+9. 调用 minimax-docx 技能，将 Markdown 内容输出为 Word 文档，保存至 `output/` 目录。
 
 # 素材不足时的降级策略
 
@@ -145,3 +148,12 @@ input/
 汇总两类内容：
 1. **识别出的主要风险** — 技术风险、市场风险、合作风险等
 2. **待核实问题清单** — 铁律二中积累的所有"对方未答清、素材未覆盖"的问题，逐条列出，作为下次交流或尽调的提问清单
+
+# 输出生成
+
+报告撰写完成后，调用 minimax-docx 技能生成 Word 文档：
+
+1. 确保 `output/` 目录存在，不存在则创建
+2. 调用 minimax-docx，传入完整 Markdown 内容
+3. 输出路径：`output/技术评估报告_{YYYYMMDD}_{技术主题}.docx`
+4. 生成完成后告知用户文件路径，由用户决定是否进一步排版调整
