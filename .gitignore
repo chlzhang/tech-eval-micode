@@ -7,3 +7,6 @@ output/
 # 系统文件
 .DS_Store
 Thumbs.db
+
+# MCP servers (may contain API keys)
+.claude/mcp-servers/
