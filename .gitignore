@@ -10,3 +10,6 @@ Thumbs.db
 
 # MCP servers (may contain API keys)
 .claude/mcp-servers/
+
+# Third-party skills (installed from external repos)
+.claude/skills/
