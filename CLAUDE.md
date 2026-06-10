@@ -20,7 +20,10 @@ Place input materials first:
 - `input/counterpart/` — counterpart's technical documents (optional, PDF/md)
 - `input/benchmark/` — internal reference documents (optional)
 
-Output goes to `output/技术评估报告_{YYYYMMDD}_{技术主题}.docx`.
+Output goes to `output/` directory:
+- `技术评估报告_{YYYYMMDD}_{技术主题}.docx` (Word)
+- `技术评估报告_{YYYYMMDD}_{技术主题}.html` (HTML, with Chart.js visualizations)
+- `report_data.json` (structured chart data)
 
 ## Architecture: Three-Phase Parallel Pipeline
 
@@ -63,3 +66,4 @@ Phase 3 (serial)
 - `.docx` files in `input/` must be converted to Markdown first: `pandoc xxx.docx -o xxx.md`
 - PDFs over 20 pages are read in segments; images need OCR via `mcp__utools__utools_ocr_ocr_extract_content`
 - Unit consistency is critical: always convert to the same unit before comparing numerical values (see memory note on unit consistency)
+- Industry benchmark data must match the specific technology pathway being evaluated — kitchen waste resource utilization has multiple routes (anaerobic digestion, feed conversion, composting, etc.) with vastly different economics; never mix cross-pathway cost data
