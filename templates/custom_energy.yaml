@@ -1,0 +1,208 @@
+# 自定义报告模板示例
+# 用于技术交流评估报告生成器
+
+name: custom_energy
+version: 1.0.0
+description: 能源行业技术评估模板（自定义版）
+type: custom
+
+metadata:
+  author: MiMo Code
+  industry: 能源环保
+  language: zh-CN
+
+sections:
+  - id: executive_summary
+    title: 执行摘要
+    order: 0
+    required: true
+    content: |
+      # 执行摘要
+      
+      ## 技术概述
+      
+      **技术名称**：{{tech.name}}
+      **技术路线**：{{tech.route}}
+      **评估时间**：{{evaluation.date}}
+      
+      ## 总体判断
+      
+      {{summary.judgment}}
+      
+      ## 关键结论
+      
+      {% for conclusion in summary.conclusions %}
+      - {{conclusion}}
+      {% endfor %}
+      
+      ## 建议行动
+      
+      {{summary.recommendation}}
+
+  - id: tech_analysis
+    title: 技术分析
+    order: 1
+    required: true
+    content: |
+      # 技术分析
+      
+      ## 技术原理
+      
+      {{tech_analysis.principle}}
+      
+      ## 关键参数
+      
+      | 参数 | 数值 | 单位 | 备注 |
+      |------|------|------|------|
+      {% for param in tech_analysis.parameters %}
+      | {{param.name}} | {{param.value}} | {{param.unit}} | {{param.note}} |
+      {% endfor %}
+      
+      ## 技术成熟度
+      
+      **当前阶段**：{{tech_analysis.maturity.stage}}
+      **验证情况**：{{tech_analysis.maturity.validation}}
+      
+      {% if tech_analysis.maturity.cases %}
+      ## 应用案例
+      
+      {% for case in tech_analysis.maturity.cases %}
+      ### {{case.name}}
+      
+      - **规模**：{{case.scale}}
+      - **运行时间**：{{case.duration}}
+      - **效果**：{{case.result}}
+      {% endfor %}
+      {% endif %}
+
+  - id: economic_analysis
+    title: 经济性分析
+    order: 2
+    required: true
+    content: |
+      # 经济性分析
+      
+      ## 投资估算
+      
+      | 项目 | 金额（万元） | 占比 | 备注 |
+      |------|-------------|------|------|
+      {% for item in economic.investment.items %}
+      | {{item.name}} | {{item.amount}} | {{item.percentage}} | {{item.note}} |
+      {% endfor %}
+      | **合计** | **{{economic.investment.total}}** | **100%** | |
+      
+      ## 运营成本
+      
+      **年运营成本**：{{economic.operation.annual_cost}} 万元
+      **单位成本**：{{economic.operation.unit_cost}} 元/吨
+      
+      ## 收益预测
+      
+      {% for scenario in economic.revenue.scenarios %}
+      ### {{scenario.name}}
+      
+      - 年收入：{{scenario.annual_revenue}} 万元
+      - 年毛利：{{scenario.annual_profit}} 万元
+      - 投资回收期：{{scenario.payback_period}} 年
+      {% endfor %}
+      
+      ## 经济性结论
+      
+      {{economic.conclusion}}
+
+  - id: risk_assessment
+    title: 风险评估
+    order: 3
+    required: true
+    content: |
+      # 风险评估
+      
+      ## 风险矩阵
+      
+      | 风险类型 | 风险描述 | 发生概率 | 影响程度 | 风险等级 | 应对措施 |
+      |----------|----------|----------|----------|----------|----------|
+      {% for risk in risks.items %}
+      | {{risk.type}} | {{risk.description}} | {{risk.probability}} | {{risk.impact}} | {{risk.level}} | {{risk.mitigation}} |
+      {% endfor %}
+      
+      ## 风险总结
+      
+      **高风险**：{{risks.summary.high}} 项
+      **中风险**：{{risks.summary.medium}} 项
+      **低风险**：{{risks.summary.low}} 项
+      
+      ## 风险应对建议
+      
+      {% for recommendation in risks.recommendations %}
+      - {{recommendation}}
+      {% endfor %}
+
+  - id: decision_path
+    title: 决策路径
+    order: 4
+    required: true
+    content: |
+      # 决策路径
+      
+      ## 推荐方案
+      
+      {{decision.recommendation}}
+      
+      ## 决策节点
+      
+      {% for node in decision.nodes %}
+      ### 节点 {{loop.index}}：{{node.name}}
+      
+      - **时间节点**：{{node.timeline}}
+      - **决策条件**：{{node.condition}}
+      - **通过行动**：{{node.pass_action}}
+      - **未通过行动**：{{node.fail_action}}
+      {% endfor %}
+      
+      ## 退出条件
+      
+      {% for condition in decision.exit_conditions %}
+      - {{condition}}
+      {% endfor %}
+      
+      ## 时间线
+      
+      {% for milestone in decision.timeline %}
+      - **{{milestone.date}}**：{{milestone.description}}
+      {% endfor %}
+      
+      ## 责任分工
+      
+      | 任务 | 负责部门 | 协助部门 | 完成时间 |
+      |------|----------|----------|----------|
+      {% for task in decision.responsibilities %}
+      | {{task.name}} | {{task.department}} | {{task.support}} | {{task.deadline}} |
+      {% endfor %}
+
+  - id: verification_list
+    title: 待核实清单
+    order: 5
+    required: false
+    content: |
+      # 待核实清单
+      
+      {% for item in verification.items %}
+      - [ ] **{{item.content}}**
+        - 建议核实方式：{{item.method}}
+        - 优先级：{{item.priority}}
+        - 负责人：{{item.owner}}
+      {% endfor %}
+
+  - id: appendix
+    title: 附录
+    order: 6
+    required: false
+    conditions: ["has_appendix"]
+    content: |
+      # 附录
+      
+      {% for item in appendix.items %}
+      ## 附录 {{loop.index}}：{{item.title}}
+      
+      {{item.content}}
+      {% endfor %}
