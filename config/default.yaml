@@ -1,0 +1,116 @@
+# 默认配置文件
+
+# 应用配置
+app:
+  name: tech-exchange-evaluator
+  version: 1.0.0
+  description: 基于技术交流/考察素材生成结构化技术评估报告
+
+# 流水线配置
+pipeline:
+  # 最大并行 Agent 数量
+  max_parallel_agents: 2
+  # 超时时间（分钟）
+  timeout_minutes: 30
+  # 重试次数
+  retry_attempts: 2
+  # 是否启用断点续传
+  enable_checkpoint: true
+  # 检查点保存间隔（秒）
+  checkpoint_interval: 300
+
+# 搜索配置
+search:
+  # 最大搜索查询数
+  max_queries: 7
+  # 搜索超时时间（秒）
+  timeout_seconds: 30
+  # 最小结果数量阈值
+  min_results_threshold: 3
+  # 时效性要求（年）
+  recency_years: 2
+  # 搜索引擎
+  engine: websearch  # websearch / tavily
+  # 搜索深度
+  search_depth: advanced
+
+# 输出配置
+output:
+  # 输出目录
+  directory: output
+  # 输出格式
+  formats:
+    - docx
+    - html
+    - json
+  # 图表库
+  chart_library: chartjs
+  # 是否生成可视化报告
+  generate_html: true
+  # 是否生成图表数据
+  generate_chart_data: true
+
+# 报告配置
+report:
+  # 默认版本
+  default_version: 精简版  # 精简版 / 完整版
+  # 报告语言
+  language: zh-CN
+  # 字体设置
+  fonts:
+    title: Microsoft YaHei
+    body: SimSun
+  # 章节编号格式
+  chapter_numbering: chinese  # chinese / arabic
+
+# 质量保障配置
+quality:
+  # 是否启用 CRITIC 审查
+  enable_critic: true
+  # 是否启用 FACT-CHECKER
+  enable_fact_checker: true
+  # 最低质量分数
+  min_quality_score: 60
+  # 数值验证允许误差
+  numerical_tolerance: 0.05
+
+# 日志配置
+logging:
+  # 日志级别
+  level: INFO  # DEBUG / INFO / WARNING / ERROR
+  # 日志文件
+  file: output/evaluation.log
+  # 是否输出到控制台
+  console: true
+  # 日志格式
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# 输入配置
+input:
+  # 输入目录
+  directory: input
+  # 转写文本路径
+  transcript: input/transcript.md
+  # 对方文档目录
+  counterpart: input/counterpart/
+  # 基准文档目录
+  benchmark: input/benchmark/
+  # 支持的文件格式
+  supported_formats:
+    - md
+    - pdf
+    - docx
+
+# 依赖技能配置
+dependencies:
+  # Word 文档生成
+  minimax_docx:
+    enabled: true
+    skill_name: minimax-docx
+  # 网络搜索
+  websearch:
+    enabled: true
+  # OCR 识别
+  ocr:
+    enabled: true
+    skill_name: utools_utools_ocr_ocr_extract_content

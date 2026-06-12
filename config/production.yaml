@@ -1,0 +1,13 @@
+# 生产环境配置
+
+# 覆盖默认配置
+pipeline:
+  timeout_minutes: 60
+  retry_attempts: 3
+
+logging:
+  level: WARNING
+  console: false
+
+quality:
+  min_quality_score: 70

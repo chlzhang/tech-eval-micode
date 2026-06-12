@@ -1,0 +1,13 @@
+# 开发环境配置
+
+# 覆盖默认配置
+pipeline:
+  timeout_minutes: 10
+  retry_attempts: 1
+
+logging:
+  level: DEBUG
+  console: true
+
+quality:
+  min_quality_score: 50

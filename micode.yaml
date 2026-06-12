@@ -1,0 +1,49 @@
+# MiMo Code 项目配置
+# 技术交流评估报告生成器
+
+name: tech-exchange-evaluator
+version: 1.0.0
+description: 基于技术交流/考察素材生成结构化技术评估报告
+
+# 技能配置
+skills:
+  - tech-exchange-evaluator
+
+# MCP 服务器配置
+mcp_servers:
+  tavily-search:
+    command: python
+    args: [".claude/mcp-servers/tavily-search.py"]
+    description: Tavily 搜索 API 服务
+
+# 输入目录结构
+input:
+  transcript: input/transcript.md
+  counterpart: input/counterpart/
+  benchmark: input/benchmark/
+
+# 输出目录
+output: output/
+
+# 报告版本
+versions:
+  default: 精简版
+  full: 完整版
+
+# 依赖技能
+dependencies:
+  - minimax-docx
+  - anysearch
+  - websearch
+
+# 文档格式支持
+formats:
+  input:
+    - md
+    - pdf
+    - docx (需转换)
+    - png/jpg (需 OCR)
+  output:
+    - docx
+    - html
+    - json

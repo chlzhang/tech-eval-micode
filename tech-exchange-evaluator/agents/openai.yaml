@@ -1,0 +1,17 @@
+display_name: 技术交流评估报告生成器
+short_description: 基于技术交流素材生成结构化技术评估报告，回答"这项技术行不行、值不值得探索"
+default_prompt: |
+  请基于 input/ 目录下的技术交流素材，生成一份技术评估报告。
+  
+  素材要求：
+  - input/transcript.md - 会议转写文本（必须）
+  - input/counterpart/ - 对方技术文档（可选）
+  - input/benchmark/ - 我方参考基准文档（可选）
+  
+  执行命令：
+  /tech-exchange-evaluation          # 精简版（4章）
+  /tech-exchange-evaluation --full   # 完整版（8章）
+  
+  输出位置：
+  - output/技术评估报告_{日期}_{主题}.docx
+  - output/技术评估报告_{日期}_{主题}.html
