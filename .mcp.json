@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "tavily-search": {
-      "command": "python",
-      "args": ["E:/Projects/技术交流评估报告生成器/.claude/mcp-servers/tavily-search.py"]
-    }
-  }
-}

@@ -1,14 +1,17 @@
 # 技术交流评估报告生成器
 
-基于技术交流/考察素材，产出结构化技术评估报告的 Claude Code skill。回答"这项技术到底行不行、值不值得进一步探索"。
+基于技术交流/考察素材，产出结构化技术评估报告的 MiMo Code 技能。回答"这项技术到底行不行、值不值得进一步探索"。
+
+## 项目特点
+
+- **三阶段并行流水线** - 素材读取与行业检索并行执行
+- **CRITIC 对抗审查** - 自动检查报告中的矛盾和偏见
+- **FACT-CHECKER 数值核验** - 确保所有数值声明准确无误
+- **双格式输出** - 同时生成 Word 文档和 HTML 可视化报告
 
 ## 安装
 
-本项目的 `.claude/commands/tech-exchange-evaluation.md` 已就绪，在项目目录下直接使用：
-
-```
-/tech-exchange-evaluation
-```
+将 `tech-exchange-evaluator/` 目录复制到 MiMo Code 的 skills 目录下。
 
 ## 素材准备
 
@@ -69,18 +72,72 @@ benchmark 放在 input/benchmark/ 目录下
 ```
 Phase 1（并行）
 ├─ Agent-A [素材读取] ──→ 结构化素材包
-└─ Agent-B [行业检索] ──→ 行业基准包（6次Tavily搜索）
+└─ Agent-B [行业检索] ──→ 行业基准包（7次并行搜索）
 
 Phase 2（串行）
 └─ Agent-C [报告撰写] ──→ CRITIC对抗审查 + FACT-CHECKER数值核验
 
 Phase 3（串行）
-└─ 主Agent [DOCX生成] ──→ Word文档
+└─ 主Agent [双格式输出] ──→ Word文档 + HTML可视化报告
 ```
 
 ## 输出
 
-报告自动输出为 Word 文档（.docx），保存在 `output/` 目录下。
+报告自动输出为 Word 文档和 HTML 可视化报告，保存在 `output/` 目录下。
 
 - 精简版：`技术评估报告_{日期}_{技术主题}.docx`
 - 完整版：`技术评估报告_{日期}_{技术主题}_完整版.docx`
+- HTML 版：`技术评估报告_{日期}_{技术主题}.html`
+- 图表数据：`report_data.json`
+
+## 技术栈
+
+- **Python 3.11+**
+- **测试框架**：pytest
+- **配置管理**：YAML + 环境变量
+- **消息队列**：异步消息队列
+- **状态管理**：检查点 + 断点续传
+- **安全防护**：XSS/SQL 注入防护
+
+## 开发
+
+```bash
+# 安装依赖
+pip install pytest pytest-asyncio
+
+# 运行测试
+pytest tests/ -v
+
+# 运行单元测试
+pytest tests/unit/ -v
+
+# 生成覆盖率报告
+pytest --cov=src tests/
+```
+
+## 项目结构
+
+```
+tech-eval-micode/
+├── src/                    # 源代码
+│   ├── config/            # 配置加载器
+│   ├── pipeline/          # 流水线引擎
+│   ├── state/             # 状态管理器
+│   ├── communication/     # 消息队列
+│   ├── search/            # 搜索验证器
+│   ├── quality/           # 质量评分器
+│   └── security/          # 安全模块
+├── tests/                  # 测试文件
+│   ├── unit/              # 单元测试
+│   ├── integration/       # 集成测试
+│   ├── regression/        # 回归测试
+│   └── fixtures/          # 测试数据
+├── config/                 # 配置文件
+├── tech-exchange-evaluator/ # MiMo Code 技能
+├── micode.yaml             # MiMo Code 配置
+└── pyproject.toml          # Python 项目配置
+```
+
+## 许可证
+
+MIT License
